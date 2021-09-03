@@ -17,7 +17,7 @@ bind_9
 [bind_9]
 192.168.x.x #Example: 192.168.1.3
 
-[vpn]
+[unifi]
 192.168.x.x #Example 192.168.1.4
 
 [ap]

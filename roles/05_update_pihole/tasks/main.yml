@@ -1,0 +1,4 @@
+---
+# Updating pihole
+- name: Updating Pihole
+  shell: pihole -up

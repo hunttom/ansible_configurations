@@ -1,0 +1,14 @@
+---
+# Updating servers to latest packages
+- name: Run the equivalent of "apt-get update"
+  become: yes
+  become_method: sudo
+  apt:
+    update_cache: yes
+
+- name: Updating all Debian packages to their latest version
+  become: yes
+  become_method: sudo
+  apt:
+    name: "*"
+    state: latest

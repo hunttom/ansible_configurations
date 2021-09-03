@@ -1,0 +1,5 @@
+---
+- name: Updating the Unifi Controller
+  apt:
+    name: unifi
+    state: latest

@@ -52,3 +52,39 @@ This playbook creates a Bind9 Server on a Raspberry Pi.
 1. Update `hosts` file with IP addresses of servers you want to target.
 2. Update of all variables within the `files` directory. I have labeled the variables using the domain `example.com` please update emails and domains as you require.
 3. Run the command when in the git repository `ansible-playbook bind_9.yml -i hosts`
+
+## Updating Elements
+### To update the Raspberry Pi
+This playbook runs the following commands `sudo apt update` and `sudo apt upgrade`
+
+Add the following to the playbook to run the following:
+
+```yaml
+- name: Updating Raspberry Pis
+  hosts: raspberrypi
+  roles:
+    - 04_update_debian
+```
+
+### To update the PiHole
+This playbook runs the following commands `pihole -up`
+
+Add the following to the playbook to run the following:
+
+### To update PiHole
+```yaml
+- name: Updating Pihole
+  hosts: pi_hole
+  roles:
+    - 05_update_pihole
+```
+
+### To update the Unifi Controller
+This playbook runs the following commands `sudo apt update` and `sudo apt upgrade unifi`
+
+Add the following to the playbook to run the following:
+```yaml
+- name: Updating  Unifi Controller
+  hosts: unifi
+  roles:
+    - 06_updating_unifi_controller
