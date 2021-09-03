@@ -1,0 +1,9 @@
+---
+# This playbook deploys the whole application stack in this site.
+
+# Example of golden image baseline of all servers.
+- name: Apply common configuration to all servers
+  hosts: all
+  remote_user: pi
+  roles:
+    - golden_image

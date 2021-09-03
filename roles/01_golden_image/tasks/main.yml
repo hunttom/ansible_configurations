@@ -1,0 +1,57 @@
+---
+# Updating servers to latest packages
+- name: Adding ssh key to authorized
+  authorized_key:
+    user: pi
+    state: present
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}" #UPDATE TO YOUR SSH KEY
+
+- name: Run the equivalent of "apt-get update"
+  become: yes
+  become_method: sudo
+  apt:
+    update_cache: yes
+
+- name: Updating all Debian packages to their latest version
+  become: yes
+  become_method: sudo
+  apt:
+    name: "*"
+    state: latest
+
+- name: Installing required standards
+  become: yes
+  become_method: sudo
+  apt:
+    pkg:
+    - unattended-upgrades
+    - vim
+
+- name: Exand the file system
+  become: yes
+  become_method: sudo
+  command: raspi-config --expand-rootfs
+
+- name: Set timezone to America/New_York
+  become: yes
+  become_method: sudo
+  timezone:
+    name: 'America/New_York' # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+
+- name: Ensure sshd_config file is set to no passwords
+  become: yes
+  become_method: sudo
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '#PasswordAuthentication yes'
+    line: PasswordAuthentication no
+
+- name: Reboot all instances
+  become: yes
+  become_method: sudo
+  reboot:
+
+- name: Wait for the instances to come back up, don't start checking for 10 seconds
+  wait_for:
+    port: 22
+    delay: 10

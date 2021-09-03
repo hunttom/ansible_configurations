@@ -1,0 +1,10 @@
+---
+# This playbook deploys unifi controller on the Raspberry Pi.
+
+# Example of Unifi Controller setup for Raspberry Pi.
+- name: Configuring Unifi Controller
+  gather_facts: False
+  hosts: pihole
+  remote_user: pi
+  roles:
+    - unifi_controller

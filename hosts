@@ -1,0 +1,24 @@
+[all:vars]
+ansible_connection=ssh
+ansible_ssh_private_key_file=~/.ssh/<KEY_FILE> #Example: ~/.ssh/id_rsa
+ansible_python_interpreter=python3
+
+[raspberrypi:vars]
+ansible_user=pi
+
+[raspberrypi:children]
+pi_hole
+bind_9
+
+# IP Addresses of your Raspberry Pis:
+[pi_hole]
+192.168.x.x #Example: 192.168.1.2
+
+[bind_9]
+192.168.x.x #Example: 192.168.1.3
+
+[vpn]
+192.168.x.x #Example 192.168.1.4
+
+[ap]
+192.168.x.x #Example 192.168.1.5

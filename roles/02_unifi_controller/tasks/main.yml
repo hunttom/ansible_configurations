@@ -1,0 +1,53 @@
+---
+- name: Installing required required packages for Unifi Controller
+  become: yes
+  become_method: sudo
+  apt:
+    pkg:
+    - ca-certificates
+    - apt-transport-https
+    - openjdk-8-jre-headless
+
+- name: Adding Unifi repository to trusted sources
+  become: yes
+  become_method: sudo
+  lineinfile:
+    path: /etc/apt/sources.list.d/100-ubnt-unifi.list
+    line: deb https://www.ui.com/downloads/unifi/debian stable ubiquiti
+    create: yes
+
+- name: Adding Unifi repository GPG key to the trusted sources
+  become: yes
+  become_method: sudo
+  get_url:
+    url: https://dl.ui.com/unifi/unifi-repo.gpg
+    dest: /etc/apt/trusted.gpg.d/unifi-repo.gpg
+    mode: '0755'
+
+- name: Run the equivalent of "apt-get update"
+  become: yes
+  become_method: sudo
+  apt:
+    update_cache: yes
+
+- name: Updating all Debian packages to their latest version
+  become: yes
+  become_method: sudo
+  apt:
+    name: "*"
+    state: latest
+
+- name: Installing required required packages for Unifi Controller
+  become: yes
+  become_method: sudo
+  apt:
+    pkg:
+    - unifi
+
+- name: Stop and Disable MongoDB in Systemd
+  become: yes
+  become_method: sudo
+  systemd:
+    state: stopped
+    name: mongodb
+    enabled: no

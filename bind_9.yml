@@ -1,0 +1,10 @@
+---
+# This playbook deploys a Bind9 server onto a Raspberry Pi.
+
+# Example creation of Bind9 server
+- name: Configure Bind9 DNS server
+  gather_facts: False
+  hosts: bind_9
+  remote_user: pi
+  roles:
+    - bind_9
