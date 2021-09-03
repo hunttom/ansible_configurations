@@ -7,4 +7,4 @@
   hosts: bind_9
   remote_user: pi
   roles:
-    - bind_9
+    - 03_bind_9

@@ -1,0 +1,79 @@
+---
+- name: Installing required required packages for Bind9
+  become: yes
+  become_method: sudo
+  apt:
+    pkg:
+    - bind9
+    - bind9-doc
+    - dnsutils
+    - bind9utils
+
+- name: Stop and Enable Bind9 in Systemd
+  become: yes
+  become_method: sudo
+  systemd:
+    state: stopped
+    name: bind9
+    enabled: yes
+
+- name: Remove resolv.conf nameserver lines if they exist
+  become: yes
+  become_method: sudo
+  lineinfile:
+    path: /etc/resolv.conf
+    state: absent
+    regexp: 'nameserver'
+
+- name: Updating resolve.conf for pointing to localhost
+  become: yes
+  become_method: sudo
+  lineinfile:
+    path: /etc/resolv.conf
+    insertafter: 'domain example.com'
+    line: nameserver 127.0.0.1
+
+- name: Replacing named.conf for local configuration
+  become: yes
+  become_method: sudo
+  copy:
+    src: ../files/named.conf
+    dest: /etc/bind/named.conf.local
+    owner: root
+    group: bind
+    mode: '0644'
+
+- name: Adding the forward zone to Bind9
+  become: yes
+  become_method: sudo
+  copy:
+    src: ../files/fwd.example.com.db
+    dest: /etc/bind/fwd.example.com.db
+    owner: root
+    group: bind
+    mode: '0644'
+
+- name: Adding the reverse zone to Bind9
+  become: yes
+  become_method: sudo
+  copy:
+    src: ../files/1.168.192.in-addr.arpa
+    dest: /etc/bind/1.168.192.in-addr.arpa
+    owner: root
+    group: bind
+    mode: '0644'
+
+- name: Updating Bind9 configuration
+  become: yes
+  become_method: sudo
+  lineinfile:
+    path: /etc/default/bind9
+    regexp: RESOLVCONF=no
+    line: RESOLVCONF=yes
+
+- name: Restarting Bind9 in Systemd
+  become: yes
+  become_method: sudo
+  systemd:
+    state: started
+    name: bind9

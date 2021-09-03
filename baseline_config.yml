@@ -6,4 +6,4 @@
   hosts: all
   remote_user: pi
   roles:
-    - golden_image
+    - 01_golden_image

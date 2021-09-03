@@ -38,9 +38,17 @@ This playbook updates ensure that Raspberry Pis following standard security prac
 3. Run the command when in the git repository `ansible-playbook baseline_config.yml -i hosts`
 
 ### To create Unifi controller
-This playbook updates to install the Unifi controller software on a Raspberry Pi.
+This playbook install the Unifi controller software on a Raspberry Pi.
 
 1. Update `hosts` file with IP addresses of servers you want to target.
     > Note: You can install this on a Raspberry Pi 2 or 3 running Pi Hole. 
 2. Update of all variables
 3. Run the command when in the git repository `ansible-playbook unifi_config.yml -i hosts`
+
+
+### To create a Bind9 DNS Server
+This playbook creates a Bind9 Server on a Raspberry Pi.
+
+1. Update `hosts` file with IP addresses of servers you want to target.
+2. Update of all variables within the `files` directory. I have labeled the variables using the domain `example.com` please update emails and domains as you require.
+3. Run the command when in the git repository `ansible-playbook bind_9.yml -i hosts`

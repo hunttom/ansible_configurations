@@ -1,0 +1,14 @@
+$TTL 86400
+@       IN      SOA     nameserver.example.com.    name@example.com.      (
+                                00001   ;Serial
+                                3600    ;Refresh
+                                1800    ;Retry
+                                604800  ;Expiry
+                                86400   ;Minimum TTL
+)
+; Name Server
+@       IN      NS      nameserver.example.com.
+;PTR Records
+1   IN  PTR router.example.com.
+2   IN  PTR pihole.example.com.
+3   IN  PTR dns.example.com.

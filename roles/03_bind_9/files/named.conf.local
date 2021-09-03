@@ -1,0 +1,11 @@
+zone "fwd.example.com.db" {
+    type master;
+    file "/etc/bind/fwd.example.com.db";
+    allow-update { none; };
+};
+
+zone "1.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/1.168.192.in-addr.arpa";
+    allow-update { none; };
+};

@@ -1,0 +1,22 @@
+$TTL 86400
+; $TTL is default unless specified elsewhere
+$ORIGIN example.com.
+@       IN      SOA     nameserver.example.com.    name@example.com.       (
+                              00001   ;Serial
+                              3600    ;Refresh
+                              1800    ;Retry
+                              604800  ;Expiry
+                              86400   ;Minimum TTL
+)
+
+; Name Server
+@       IN      NS      dns.example.com.
+;A Record Definitions
+dns      IN      A       192.168.1.3
+puppetmaster    IN      A       192.168.1.1
+pihole IN  A   192.168.1.2
+vpn IN A 192.168.1.4
+
+; Canonical Name/Alias
+dns     IN  CNAME nameserver.example.com.
+router  IN  CNAME   puppetmaster.example.com.
